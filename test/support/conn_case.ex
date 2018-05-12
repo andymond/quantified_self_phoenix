@@ -20,6 +20,7 @@ defmodule QuantifiedSelfPhoenixWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import QuantifiedSelfPhoenixWeb.Router.Helpers
+      import QuantifiedSelfPhoenix.FoodFactory
 
       # The default endpoint for testing
       @endpoint QuantifiedSelfPhoenixWeb.Endpoint

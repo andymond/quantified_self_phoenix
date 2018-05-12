@@ -19,8 +19,20 @@ defmodule QuantifiedSelfPhoenixWeb.FoodControllerTest do
 
   describe "index" do
     test "lists all foods", %{conn: conn} do
+      food1 = insert(:food)
+      food2 = insert(:food)
+
       conn = get conn, food_path(conn, :index)
-      assert json_response(conn, 200) == []
+
+      response = json_response(conn, 200)
+
+      assert length(response) == 2
+      assert Enum.at(response, 0)["id"] == food1.id
+      assert Enum.at(response, 0)["calories"] == food1.calories
+      assert Enum.at(response, 0)["name"] == food1.name
+      assert Enum.at(response, 1)["id"] == food2.id
+      assert Enum.at(response, 1)["calories"] == food2.calories
+      assert Enum.at(response, 1)["name"] == food2.name
     end
   end
 

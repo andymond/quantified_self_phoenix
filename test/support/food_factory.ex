@@ -4,7 +4,7 @@ defmodule QuantifiedSelfPhoenix.FoodFactory do
   def food_factory do
     %QuantifiedSelfPhoenix.Foods.Food{
       name: sequence(:name, &"food#{&1}"),
-      calories: sequence(:calories, &"food#{&1}")
+      calories: sequence(:calories, &"#{&1 * 100}")
     }
   end
 end
