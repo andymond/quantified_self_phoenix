@@ -3,11 +3,11 @@ defmodule QuantifiedSelfPhoenixWeb.FoodView do
   alias QuantifiedSelfPhoenixWeb.FoodView
 
   def render("index.json", %{foods: foods}) do
-    %{data: render_many(foods, FoodView, "food.json")}
+    render_many(foods, FoodView, "food.json")
   end
 
   def render("show.json", %{food: food}) do
-    %{data: render_one(food, FoodView, "food.json")}
+    render_one(food, FoodView, "food.json")
   end
 
   def render("food.json", %{food: food}) do

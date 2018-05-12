@@ -20,17 +20,17 @@ defmodule QuantifiedSelfPhoenixWeb.FoodControllerTest do
   describe "index" do
     test "lists all foods", %{conn: conn} do
       conn = get conn, food_path(conn, :index)
-      assert json_response(conn, 200)["data"] == []
+      assert json_response(conn, 200) == []
     end
   end
 
   describe "create food" do
     test "renders food when data is valid", %{conn: conn} do
       conn = post conn, food_path(conn, :create), food: @create_attrs
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      assert %{"id" => id} = json_response(conn, 201)
 
       conn = get conn, food_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
+      assert json_response(conn, 200) == %{
         "id" => id,
         "calories" => 42,
         "name" => "some name"}
@@ -47,10 +47,10 @@ defmodule QuantifiedSelfPhoenixWeb.FoodControllerTest do
 
     test "renders food when data is valid", %{conn: conn, food: %Food{id: id} = food} do
       conn = put conn, food_path(conn, :update, food), food: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert %{"id" => ^id} = json_response(conn, 200)
 
       conn = get conn, food_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
+      assert json_response(conn, 200) == %{
         "id" => id,
         "calories" => 43,
         "name" => "some updated name"}
