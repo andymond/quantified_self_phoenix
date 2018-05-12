@@ -19,8 +19,9 @@ defmodule QuantifiedSelfPhoenixWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", QuantifiedSelfPhoenixWeb do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", QuantifiedSelfPhoenixWeb do
+    pipe_through :api
+
+    resources "/foods", FoodController, except: [:new, :edit, :delete]
+  end
 end
