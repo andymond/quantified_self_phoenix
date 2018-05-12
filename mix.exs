@@ -20,7 +20,7 @@ defmodule QuantifiedSelfPhoenix.Mixfile do
   def application do
     [
       mod: {QuantifiedSelfPhoenix.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:ex_machina, :logger, :runtime_tools]
     ]
   end
 
@@ -40,7 +40,8 @@ defmodule QuantifiedSelfPhoenix.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:ex_machina, "~> 2.2", only: :test}
     ]
   end
 
