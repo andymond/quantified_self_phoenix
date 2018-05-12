@@ -56,7 +56,7 @@ defmodule QuantifiedSelfPhoenix.FoodsTest do
     test "delete_food/1 deletes the food" do
       food = food_fixture()
       assert {:ok, %Food{}} = Foods.delete_food(food)
-      assert_raise Ecto.NoResultsError, fn -> Foods.get_food!(food.id) end
+      assert nil == Foods.get_food!(food.id)
     end
 
     test "change_food/1 returns a food changeset" do
