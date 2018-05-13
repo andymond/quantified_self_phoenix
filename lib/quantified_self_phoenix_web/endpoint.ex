@@ -37,6 +37,8 @@ defmodule QuantifiedSelfPhoenixWeb.Endpoint do
     key: "_quantified_self_phoenix_key",
     signing_salt: "qZjF9D29"
 
+  plug CORSPlug
+
   plug QuantifiedSelfPhoenixWeb.Router
 
   @doc """
