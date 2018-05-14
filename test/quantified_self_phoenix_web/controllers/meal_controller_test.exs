@@ -3,6 +3,9 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
 
   alias QuantifiedSelfPhoenix.Meals
   alias QuantifiedSelfPhoenix.Meals.Meal
+  alias QuantifiedSelfPhoenix.Foods
+  alias QuantifiedSelfPhoenix.MealFoods
+  alias QuantifiedSelfPhoenix.Repo
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
@@ -10,7 +13,9 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
 
   def fixture(:meal) do
     {:ok, meal} = Meals.create_meal(@create_attrs)
-    meal
+    {:ok, food} = Foods.create_food(%{name: "ratatouille", calories: 100})
+    MealFoods.create_meal_food(%{meal_id: meal.id, food_id: food.id})
+    meal |> Repo.preload(:foods)
   end
 
   setup %{conn: conn} do
@@ -18,9 +23,14 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
   end
 
   describe "index" do
-    test "lists all meals", %{conn: conn} do
+    setup [:create_meal]
+
+    test "lists all meals", %{conn: conn, meal: %Meal{id: id}} do
       conn = get conn, meal_path(conn, :index)
-      assert json_response(conn, 200) == []
+      assert json_response(conn, 200) == [%{
+        "id" => id,
+        "name" => "some name",
+        "foods" => []}]
     end
   end
 
@@ -32,7 +42,8 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
       conn = get conn, meal_path(conn, :show, id)
       assert json_response(conn, 200) == %{
         "id" => id,
-        "name" => "some name"}
+        "name" => "some name",
+        "foods" => []}
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -51,7 +62,8 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
       conn = get conn, meal_path(conn, :show, id)
       assert json_response(conn, 200) == %{
         "id" => id,
-        "name" => "some updated name"}
+        "name" => "some updated name",
+        "foods" => []}
     end
 
     test "renders errors when data is invalid", %{conn: conn, meal: meal} do

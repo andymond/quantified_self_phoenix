@@ -11,7 +11,10 @@ defmodule QuantifiedSelfPhoenixWeb.MealView do
   end
 
   def render("meal.json", %{meal: meal}) do
-    %{id: meal.id,
-      name: meal.name}
+    %{
+      id: meal.id,
+      name: meal.name,
+      foods: []
+    }
   end
 end

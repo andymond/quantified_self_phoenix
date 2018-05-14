@@ -18,7 +18,8 @@ defmodule QuantifiedSelfPhoenix.Meals do
 
   """
   def list_meals do
-    Repo.all(Meal) 
+    meals = Repo.all(Meal)
+    Repo.preload(meals, :foods)
   end
 
   @doc """

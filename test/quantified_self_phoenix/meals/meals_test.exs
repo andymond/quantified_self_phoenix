@@ -20,7 +20,7 @@ defmodule QuantifiedSelfPhoenix.MealsTest do
     end
 
     test "list_meals/0 returns all meals" do
-      meal = meal_fixture()
+      meal = meal_fixture() |> Repo.preload(:foods)
       assert Meals.list_meals() == [meal]
     end
 
