@@ -22,6 +22,6 @@ defmodule QuantifiedSelfPhoenixWeb.Router do
   scope "/api/v1", QuantifiedSelfPhoenixWeb do
     pipe_through :api
 
-    resources "/foods", FoodController, except: [:new, :edit, :delete]
+    resources "/foods", FoodController, except: [:new, :edit]
   end
 end

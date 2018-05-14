@@ -39,7 +39,7 @@ defmodule QuantifiedSelfPhoenixWeb.FoodControllerTest do
   describe "create food" do
     test "renders food when data is valid", %{conn: conn} do
       conn = post conn, food_path(conn, :create), food: @create_attrs
-      assert %{"id" => id} = json_response(conn, 201)
+      assert %{"id" => id, "calories" => 42, "name" => "some name"} = json_response(conn, 201)
 
       conn = get conn, food_path(conn, :show, id)
       assert json_response(conn, 200) == %{
@@ -71,6 +71,15 @@ defmodule QuantifiedSelfPhoenixWeb.FoodControllerTest do
     test "renders errors when data is invalid", %{conn: conn, food: food} do
       conn = put conn, food_path(conn, :update, food), food: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
+    end
+  end
+
+  describe "delete food" do
+    setup [:create_food]
+
+    test "renders food when data is valid", %{conn: conn, food: %Food{id: id} = food} do
+      conn = delete conn, food_path(conn, :delete, food)
+      assert response(conn, 204)
     end
   end
 
