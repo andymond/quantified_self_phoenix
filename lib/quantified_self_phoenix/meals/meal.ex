@@ -2,13 +2,12 @@ defmodule QuantifiedSelfPhoenix.Meals.Meal do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "meals" do
     field :name, :string
 
     timestamps()
 
-    many_to_many :foods, QuantifiedSelfPhoenix.Meals.Meal, join_through: "mealfoods"
+    many_to_many :foods, QuantifiedSelfPhoenix.Foods.Food, join_through: "mealfoods"
   end
 
   @doc false

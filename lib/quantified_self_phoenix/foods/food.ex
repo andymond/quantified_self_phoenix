@@ -9,7 +9,7 @@ defmodule QuantifiedSelfPhoenix.Foods.Food do
 
     timestamps()
 
-    many_to_many :meals, QuantifiedSelfPhoenix.Foods.Food, join_through: "mealfoods"
+    many_to_many :meals, QuantifiedSelfPhoenix.Meals.Meal, join_through: "mealfoods"
   end
 
   @doc false

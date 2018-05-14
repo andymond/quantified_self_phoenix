@@ -4,13 +4,10 @@ defmodule QuantifiedSelfPhoenix.MealFoods.MealFood do
 
 
   schema "mealfoods" do
-    # field :meal_id, :id
-    # field :food_id, :id
-
-    timestamps()
-
     belongs_to :food, QuantifiedSelfPhoenix.Foods.Food
     belongs_to :meal, QuantifiedSelfPhoenix.Meals.Meal
+    
+    timestamps()
   end
 
   @doc false
