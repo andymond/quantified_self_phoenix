@@ -77,9 +77,15 @@ defmodule QuantifiedSelfPhoenixWeb.FoodControllerTest do
   describe "delete food" do
     setup [:create_food]
 
-    test "renders food when data is valid", %{conn: conn, food: %Food{id: id} = food} do
+    test "renders food when data is valid", %{conn: conn, food: %Food{} = food} do
       conn = delete conn, food_path(conn, :delete, food)
       assert response(conn, 204)
+    end
+
+    test "renders 400 when data is invalid", %{conn: conn} do
+      assert_error_sent 404, fn ->
+        delete conn, food_path(conn, :delete, 3)
+      end
     end
   end
 

@@ -35,7 +35,7 @@ defmodule QuantifiedSelfPhoenix.Foods do
       ** (Ecto.NoResultsError)
 
   """
-  def get_food!(id), do: Repo.get(Food, id)
+  def get_food!(id), do: Repo.get!(Food, id)
 
   @doc """
   Creates a food.
