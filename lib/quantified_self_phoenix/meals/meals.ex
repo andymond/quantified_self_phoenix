@@ -18,7 +18,7 @@ defmodule QuantifiedSelfPhoenix.Meals do
 
   """
   def list_meals do
-    Repo.all(Meal)
+    Repo.all(Meal) 
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule QuantifiedSelfPhoenix.Meals do
       ** (Ecto.NoResultsError)
 
   """
-  def get_meal!(id), do: Repo.get!(Meal, id)
+  def get_meal!(id), do: Repo.get!(Meal, id) |> Repo.preload(:foods)
 
   @doc """
   Creates a meal.

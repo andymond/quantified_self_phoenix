@@ -7,6 +7,8 @@ defmodule QuantifiedSelfPhoenix.Meals.Meal do
     field :name, :string
 
     timestamps()
+
+    many_to_many :foods, QuantifiedSelfPhoenix.Meals.Meal, join_through: "mealfoods"
   end
 
   @doc false

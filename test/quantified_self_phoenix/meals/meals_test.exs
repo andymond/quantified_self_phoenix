@@ -25,7 +25,7 @@ defmodule QuantifiedSelfPhoenix.MealsTest do
     end
 
     test "get_meal!/1 returns the meal with given id" do
-      meal = meal_fixture()
+      meal = meal_fixture() |> Repo.preload(:foods)
       assert Meals.get_meal!(meal.id) == meal
     end
 
@@ -46,7 +46,7 @@ defmodule QuantifiedSelfPhoenix.MealsTest do
     end
 
     test "update_meal/2 with invalid data returns error changeset" do
-      meal = meal_fixture()
+      meal = meal_fixture() |> Repo.preload(:foods)
       assert {:error, %Ecto.Changeset{}} = Meals.update_meal(meal, @invalid_attrs)
       assert meal == Meals.get_meal!(meal.id)
     end
