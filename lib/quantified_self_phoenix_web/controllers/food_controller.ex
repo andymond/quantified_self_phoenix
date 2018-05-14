@@ -32,4 +32,12 @@ defmodule QuantifiedSelfPhoenixWeb.FoodController do
       render(conn, "show.json", food: food)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    food = Foods.get_food!(id)
+
+    with {:ok, %Food{}} <- Foods.delete_food(food) do
+      send_resp(conn, :no_content, "")
+    end
+  end
 end
