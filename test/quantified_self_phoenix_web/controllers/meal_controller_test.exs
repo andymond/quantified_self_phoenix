@@ -25,18 +25,19 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
   describe "index" do
     setup [:create_meal]
 
-    test "lists all meals", %{conn: conn, meal: %Meal{id: id}} do
+    test "lists all meals", %{conn: conn, meal: %Meal{id: id} = meal} do
       conn = get conn, meal_path(conn, :index)
       assert json_response(conn, 200) == [%{
         "id" => id,
         "name" => "some name",
-        "foods" => []}]
+        "foods" => [%{"id" => Enum.at(meal.foods, 0).id, "name" => "ratatouille", "calories" => 100}]}]
     end
   end
 
   describe "create meal" do
     test "renders meal when data is valid", %{conn: conn} do
       conn = post conn, meal_path(conn, :create), meal: @create_attrs
+
       assert %{"id" => id} = json_response(conn, 201)
 
       conn = get conn, meal_path(conn, :show, id)
@@ -55,7 +56,7 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
   describe "update meal" do
     setup [:create_meal]
 
-    test "renders meal when data is valid", %{conn: conn, meal: %Meal{id: id} = meal} do
+    test "renders meal when data is valid", %{conn: conn, meal: %Meal{id: id, foods: foods } = meal} do
       conn = put conn, meal_path(conn, :update, meal), meal: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)
 
@@ -63,7 +64,7 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
       assert json_response(conn, 200) == %{
         "id" => id,
         "name" => "some updated name",
-        "foods" => []}
+        "foods" => [%{"id" => Enum.at(meal.foods, 0).id, "name" => "ratatouille", "calories" => 100}]}
     end
 
     test "renders errors when data is invalid", %{conn: conn, meal: meal} do
