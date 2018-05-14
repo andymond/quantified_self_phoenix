@@ -14,7 +14,7 @@ defmodule QuantifiedSelfPhoenixWeb.MealView do
     %{
       id: meal.id,
       name: meal.name,
-      foods: []
+      foods: render_many(meal.foods, QuantifiedSelfPhoenixWeb.FoodView, "food.json")
     }
   end
 end
