@@ -5,13 +5,6 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodControllerTest do
   alias QuantifiedSelfPhoenix.Meals
   alias QuantifiedSelfPhoenix.Foods
 
-  def fixture(:meal_food) do
-    {:ok, meal} = Meals.create_meal(%{name: "some meal"})
-    {:ok, food} = Foods.create_food(%{name: "some food", calories: 40})
-    {:ok, meal_food} = MealFoods.create_meal_food(%{meal_id: meal.id, food_id: food.id})
-    meal_food
-  end
-
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
@@ -32,19 +25,16 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodControllerTest do
   end
 
   describe "delete meal_food" do
-    setup [:create_meal_food]
+    test "deletes chosen meal_food", %{conn: conn} do
+      {:ok, meal} = Meals.create_meal(%{name: "some meal"})
+      {:ok, food} = Foods.create_food(%{name: "some food", calories: 40})
+      MealFoods.create_meal_food(%{meal_id: meal.id, food_id: food.id})
+      conn = delete conn, "/api/v1/meals/#{meal.id}/foods/#{food.id}"
 
-    test "deletes chosen meal_food", %{conn: conn, meal_food: meal_food} do
-      conn = delete conn, "/meals/:meal_id/foods/:id"
-      assert response(conn, 204)
+      assert %{"message" =>  "Successfully removed some food from some meal"} = json_response(conn, 200)
       assert_error_sent 404, fn ->
         get conn, "/meals/1/foods/1"
       end
     end
-  end
-
-  defp create_meal_food(_) do
-    meal_food = fixture(:meal_food)
-    {:ok, meal_food: meal_food}
   end
 end
