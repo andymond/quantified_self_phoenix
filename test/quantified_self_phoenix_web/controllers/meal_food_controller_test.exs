@@ -24,10 +24,11 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodControllerTest do
       assert %{"message" =>  "Successfully added some food to some meal"} = json_response(conn, 201)
     end
 
-    # test "renders errors when data is invalid", %{conn: conn} do
-    #   conn = post conn, "/api/v1/meals/1/foods/1"
-    #   assert json_response(conn, 422)["errors"] != %{}
-    # end
+    test "renders errors when data is invalid", %{conn: conn} do
+      assert_error_sent 404, fn ->
+        post conn, "/meals/1/foods/1"
+      end
+    end
   end
 
   # describe "delete meal_food" do

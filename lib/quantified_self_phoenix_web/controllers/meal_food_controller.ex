@@ -9,9 +9,9 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodController do
   action_fallback QuantifiedSelfPhoenixWeb.FallbackController
 
   def create(conn, %{"food_id" => food_id, "meal_id" => meal_id} = meal_food_params) do
+    meal = Meals.get_meal!(meal_id)
+    food = Foods.get_food!(food_id)
     with {:ok, %MealFood{}} <- MealFoods.create_meal_food(meal_food_params) do
-      meal = Meals.get_meal!(meal_id)
-      food = Foods.get_food!(food_id)
       conn
       |> put_status(:created)
       |> render("success.json", names: %{meal: meal.name, food: food.name})
