@@ -64,7 +64,7 @@ defmodule QuantifiedSelfPhoenixWeb.MealControllerTest do
       assert json_response(conn, 200) == %{
         "id" => id,
         "name" => "some updated name",
-        "foods" => [%{"id" => Enum.at(meal.foods, 0).id, "name" => "ratatouille", "calories" => 100}]}
+        "foods" => [%{"id" => Enum.at(foods, 0).id, "name" => "ratatouille", "calories" => 100}]}
     end
 
     test "renders errors when data is invalid", %{conn: conn, meal: meal} do
