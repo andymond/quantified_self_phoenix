@@ -13,7 +13,7 @@ defmodule QuantifiedSelfPhoenix.MealFoodsTest do
     test "create_meal_food/1 with valid data creates a meal_food" do
       meal = Repo.insert!(%Meal{name: "lunch"})
       food = Repo.insert!(%Food{name: "meat"})
-      assert {:ok, %MealFood{} = meal_food} = MealFoods.create_meal_food(%{food_id: food.id, meal_id: meal.id})
+      assert {:ok, %MealFood{}} = MealFoods.create_meal_food(%{food_id: food.id, meal_id: meal.id})
     end
 
     test "create_meal_food/1 with invalid data returns error changeset" do
