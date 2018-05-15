@@ -2,14 +2,13 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodControllerTest do
   use QuantifiedSelfPhoenixWeb.ConnCase
 
   alias QuantifiedSelfPhoenix.MealFoods
-  alias QuantifiedSelfPhoenix.MealFoods.MealFood
-
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  alias QuantifiedSelfPhoenix.Meals
+  alias QuantifiedSelfPhoenix.Foods
 
   def fixture(:meal_food) do
-    {:ok, meal_food} = MealFoods.create_meal_food(@create_attrs)
+    meal = Meals.create_meal(%{name: "some meal"})
+    food = Foods.create_food(%{name: "some food"})
+    {:ok, meal_food} = MealFoods.create_meal_food(%{meal_id: meal.id, food_id: food.id})
     meal_food
   end
 
@@ -17,22 +16,20 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  # describe "create meal_food" do
-  #   test "renders meal_food when data is valid", %{conn: conn} do
-  #     conn = post conn, "/meals/1/foods/1"
-  #     assert %{"id" => id} = json_response(conn, 201)["data"]
-  #
-  #     conn = get conn, meal_food_path(conn, :show, id)
-  #     assert json_response(conn, 200)["data"] == %{
-  #       "id" => id}
-  #   end
-  #
-  #   test "renders errors when data is invalid", %{conn: conn} do
-  #     conn = post conn, "/meals/:meal_id/foods/:id"
-  #     assert json_response(conn, 422)["errors"] != %{}
-  #   end
-  # end
-  #
+  describe "create meal_food" do
+    test "renders meal_food when data is valid", %{conn: conn} do
+      {:ok, meal} = Meals.create_meal(%{name: "some meal"})
+      {:ok, food} = Foods.create_food(%{name: "some food", calories: 40})
+      conn = post conn, "/api/v1/meals/#{meal.id}/foods/#{food.id}"
+      assert %{"message" =>  "Successfully added some food to some meal"} = json_response(conn, 201)
+    end
+
+    # test "renders errors when data is invalid", %{conn: conn} do
+    #   conn = post conn, "/api/v1/meals/1/foods/1"
+    #   assert json_response(conn, 422)["errors"] != %{}
+    # end
+  end
+
   # describe "delete meal_food" do
   #   setup [:create_meal_food]
   #
@@ -40,7 +37,7 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodControllerTest do
   #     conn = delete conn, "/meals/:meal_id/foods/:id"
   #     assert response(conn, 204)
   #     assert_error_sent 404, fn ->
-  #       get conn, meal_food_path(conn, :show, meal_food)
+        # get conn, "/meals/1/foods/1"
   #     end
   #   end
   # end
