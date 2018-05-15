@@ -38,6 +38,22 @@ defmodule QuantifiedSelfPhoenix.MealFoods do
   def get_meal_food!(id), do: Repo.get(MealFood, id)
 
   @doc """
+  Finds a meal_food by food_id and meal_id.
+
+  ## Examples
+
+      iex> find_meal_food(%{field: value})
+      {:ok, %MealFood{}}
+
+      iex> find_meal_food(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def find_meal_food(attrs \\ %{}) do
+    Repo.get_by!(MealFood, attrs)
+  end
+
+  @doc """
   Creates a meal_food.
 
   ## Examples
