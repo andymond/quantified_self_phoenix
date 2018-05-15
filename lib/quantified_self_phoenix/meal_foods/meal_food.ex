@@ -6,7 +6,7 @@ defmodule QuantifiedSelfPhoenix.MealFoods.MealFood do
   schema "mealfoods" do
     belongs_to :food, QuantifiedSelfPhoenix.Foods.Food
     belongs_to :meal, QuantifiedSelfPhoenix.Meals.Meal
-    
+
     timestamps()
   end
 
@@ -15,5 +15,7 @@ defmodule QuantifiedSelfPhoenix.MealFoods.MealFood do
     meal_food
     |> cast(attrs, [:meal_id, :food_id])
     |> validate_required([:meal_id, :food_id])
+    |> foreign_key_constraint(:meal_id, meal_id: :mealfoods_meal_id_fkey)
+    |> foreign_key_constraint(:food_id, food_id: :mealfoods_food_id_fkey)
   end
 end

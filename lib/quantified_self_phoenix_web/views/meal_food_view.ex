@@ -6,8 +6,12 @@ defmodule QuantifiedSelfPhoenixWeb.MealFoodView do
     %{data: render_many(mealfoods, MealFoodView, "meal_food.json")}
   end
 
-  def render("show.json", %{meal_food: meal_food}) do
-    %{data: render_one(meal_food, MealFoodView, "meal_food.json")}
+  def render("created.json", %{names: names}) do
+    %{message: "Successfully added #{names.food} to #{names.meal}"}
+  end
+
+  def render("deleted.json", %{names: names}) do
+    %{message: "Successfully removed #{names.food} from #{names.meal}"}
   end
 
   def render("meal_food.json", %{meal_food: meal_food}) do
